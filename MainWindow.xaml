@@ -1,0 +1,35 @@
+<Window x:Class="FileCounterPro_Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="FileCounter Pro (Windows Edition)" Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <Border Grid.Column="0" Background="{StaticResource SciFiBgDeep}" BorderBrush="{StaticResource SciFiNeonCyan}" BorderThickness="0,0,1,0">
+            <StackPanel Margin="0,30,0,0">
+                <TextBlock Text="FILE COUNTER PRO" FontSize="18" FontWeight="Black" Foreground="{StaticResource SciFiNeonCyan}" HorizontalAlignment="Center" Margin="0,0,0,30"/>
+                
+                <Button Content="Dashboard" Style="{StaticResource NeonButtonStyle}" Margin="20,5" Click="NavDashboard_Click"/>
+                <Button Content="Smart Uninstaller" Style="{StaticResource NeonButtonStyle}" Margin="20,5" Click="NavUninstaller_Click"/>
+                <Button Content="Hardware Analyzer" Style="{StaticResource NeonButtonStyle}" Margin="20,5" Click="NavHardware_Click"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content Area -->
+        <Border Grid.Column="1" Background="{StaticResource SciFiBgPanel}" Padding="30">
+            <Grid>
+                <!-- Dynamic Content goes here -->
+                <TextBlock x:Name="ContentTitle" Text="Welcome to FileCounter Pro" FontSize="28" FontWeight="Bold" Foreground="{StaticResource SciFiTextPrimary}" VerticalAlignment="Top"/>
+                
+                <ScrollViewer Margin="0,50,0,0">
+                    <TextBlock x:Name="MainContentText" Text="Select a module from the sidebar..." FontSize="14" Foreground="{StaticResource SciFiTextDim}" TextWrapping="Wrap"/>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

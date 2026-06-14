@@ -1,0 +1,55 @@
+<Application x:Class="FileCounterPro_Windows.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <!-- Sci-Fi Cyberpunk Theme Colors -->
+        <SolidColorBrush x:Key="SciFiBgDeep" Color="#0A0A19" />
+        <SolidColorBrush x:Key="SciFiBgPanel" Color="#141429" />
+        <SolidColorBrush x:Key="SciFiNeonCyan" Color="#00E6FF" />
+        <SolidColorBrush x:Key="SciFiNeonMagenta" Color="#FF0099" />
+        <SolidColorBrush x:Key="SciFiNeonGreen" Color="#00FF80" />
+        <SolidColorBrush x:Key="SciFiTextDim" Color="#8C8C8C" />
+        <SolidColorBrush x:Key="SciFiTextPrimary" Color="#FFFFFF" />
+        
+        <!-- Base Styles -->
+        <Style TargetType="Window">
+            <Setter Property="Background" Value="{StaticResource SciFiBgDeep}" />
+            <Setter Property="Foreground" Value="{StaticResource SciFiTextPrimary}" />
+            <Setter Property="FontFamily" Value="Consolas" />
+        </Style>
+        
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource SciFiTextPrimary}" />
+            <Setter Property="FontFamily" Value="Consolas" />
+        </Style>
+        
+        <!-- Glowing Neon Button -->
+        <Style x:Key="NeonButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource SciFiNeonCyan}" />
+            <Setter Property="BorderBrush" Value="{StaticResource SciFiNeonCyan}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="15,8" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1A00E6FF" />
+                    <Setter Property="Cursor" Value="Hand" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Application.Resources>
+</Application>

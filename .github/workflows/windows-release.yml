@@ -28,10 +28,15 @@ jobs:
         run: |
           Rename-Item -Path "out\FileCounterPro_Windows.exe" -NewName "FileCounterPro-Windows-x64.exe"
 
+      - name: Build Installer (Inno Setup)
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
+        with:
+          path: installer.iss
+
       - name: Upload Release
         uses: softprops/action-gh-release@v2
         with:
-          files: out/FileCounterPro-Windows-x64.exe
+          files: Output/FileCounterPro_Setup.exe
           name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false

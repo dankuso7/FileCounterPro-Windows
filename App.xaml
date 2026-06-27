@@ -9,6 +9,8 @@
         <SolidColorBrush x:Key="SciFiNeonCyan" Color="#00E6FF" />
         <SolidColorBrush x:Key="SciFiNeonMagenta" Color="#FF0099" />
         <SolidColorBrush x:Key="SciFiNeonGreen" Color="#00FF80" />
+        <SolidColorBrush x:Key="SciFiNeonPurple" Color="#8A2BE2" />
+        <SolidColorBrush x:Key="SciFiNeonRed" Color="#FF3333" />
         <SolidColorBrush x:Key="SciFiTextDim" Color="#8C8C8C" />
         <SolidColorBrush x:Key="SciFiTextPrimary" Color="#FFFFFF" />
         
@@ -30,26 +32,82 @@
             <Setter Property="Foreground" Value="{StaticResource SciFiNeonCyan}" />
             <Setter Property="BorderBrush" Value="{StaticResource SciFiNeonCyan}" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Padding" Value="15,8" />
+            <Setter Property="Padding" Value="15,10" />
+            <Setter Property="Margin" Value="0,5" />
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" 
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}" 
-                                CornerRadius="4">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                CornerRadius="8">
+                            <Border.Effect>
+                                <DropShadowEffect x:Name="glow" Color="{Binding Color, Source={StaticResource SciFiNeonCyan}}" BlurRadius="0" ShadowDepth="0" Opacity="0" />
+                            </Border.Effect>
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand" />
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#1A00E6FF" Duration="0:0:0.2" />
+                                            <DoubleAnimation Storyboard.TargetName="glow" Storyboard.TargetProperty="BlurRadius" To="15" Duration="0:0:0.2" />
+                                            <DoubleAnimation Storyboard.TargetName="glow" Storyboard.TargetProperty="Opacity" To="0.8" Duration="0:0:0.2" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0.3" />
+                                            <DoubleAnimation Storyboard.TargetName="glow" Storyboard.TargetProperty="BlurRadius" To="0" Duration="0:0:0.3" />
+                                            <DoubleAnimation Storyboard.TargetName="glow" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#1A00E6FF" />
-                    <Setter Property="Cursor" Value="Hand" />
-                </Trigger>
-            </Style.Triggers>
         </Style>
+
+        <!-- Red Action Button (For delete, threats) -->
+        <Style x:Key="DangerButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#1AFF3333" />
+            <Setter Property="Foreground" Value="{StaticResource SciFiNeonRed}" />
+            <Setter Property="BorderBrush" Value="{StaticResource SciFiNeonRed}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="10,5" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand" />
+                                <Setter TargetName="border" Property="Background" Value="#33FF3333" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Standard Card Border -->
+        <Style x:Key="SciFiCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource SciFiBgDeep}" />
+            <Setter Property="BorderBrush" Value="{StaticResource SciFiNeonPurple}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="20" />
+        </Style>
+
     </Application.Resources>
 </Application>

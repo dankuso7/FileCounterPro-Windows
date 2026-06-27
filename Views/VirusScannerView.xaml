@@ -1,0 +1,47 @@
+<UserControl x:Class="FileCounterPro_Windows.Views.VirusScannerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0">
+            <TextBlock Text="SYSTEM VIRUS &amp; THREAT SCANNER" FontSize="32" FontWeight="Black" Foreground="{StaticResource SciFiTextPrimary}" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <TextBlock Text="Heuristic analysis of Windows critical paths and startup registries." FontSize="14" Foreground="{StaticResource SciFiTextDim}" HorizontalAlignment="Center" Margin="0,0,0,40"/>
+
+            <Border Style="{StaticResource SciFiCardStyle}" Width="600" Height="300">
+                <Grid>
+                    <StackPanel VerticalAlignment="Center" x:Name="PnlReady">
+                        <TextBlock Text="SYSTEM SECURE" Foreground="{StaticResource SciFiNeonGreen}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                        <TextBlock Text="No active threats detected in memory." Foreground="{StaticResource SciFiTextDim}" FontSize="12" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    
+                    <!-- Scan Results List (Hidden initially) -->
+                    <ListView x:Name="LstThreats" Background="Transparent" BorderThickness="0" Visibility="Collapsed" Margin="10">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="{StaticResource SciFiNeonMagenta}" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,5" Background="#1A141429" Width="550">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="{Binding FileName}" Foreground="{StaticResource SciFiNeonMagenta}" FontWeight="Bold" FontSize="14"/>
+                                            <TextBlock Text="{Binding FilePath}" Foreground="{StaticResource SciFiTextDim}" FontSize="11" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{Binding Reason}" Foreground="{StaticResource SciFiNeonMagenta}" FontSize="11" FontStyle="Italic" Margin="0,4,0,0" Opacity="0.8"/>
+                                        </StackPanel>
+                                        <Button Grid.Column="1" Content="🗑️ DELETE" Style="{StaticResource DangerButtonStyle}" Click="BtnDeleteThreat_Click" Tag="{Binding}"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Border>
+
+            <Button x:Name="BtnFullScan" Content="🚨 INITIATE FULL SYSTEM SCAN 🚨" Style="{StaticResource NeonButtonStyle}" Width="400" Click="BtnScan_Click" Margin="0,40,0,0" Foreground="{StaticResource SciFiNeonMagenta}" BorderBrush="{StaticResource SciFiNeonMagenta}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

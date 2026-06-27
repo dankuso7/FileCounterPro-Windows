@@ -1,6 +1,6 @@
-using System;
 using System.Windows;
-using System.Threading.Tasks;
+using System.Windows.Input;
+using FileCounterPro_Windows.Views;
 
 namespace FileCounterPro_Windows
 {
@@ -9,36 +9,45 @@ namespace FileCounterPro_Windows
         public MainWindow()
         {
             InitializeComponent();
+            MainContent.Content = new DashboardView();
+        }
+
+        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
+
+        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
 
         private void NavDashboard_Click(object sender, RoutedEventArgs e)
         {
-            ContentTitle.Text = "Dashboard";
-            MainContentText.Text = "System Dashboard coming soon. This will show your PC's general health.";
+            MainContent.Content = new DashboardView();
         }
 
-        private async void NavUninstaller_Click(object sender, RoutedEventArgs e)
+        private void NavVirusScanner_Click(object sender, RoutedEventArgs e)
         {
-            ContentTitle.Text = "Smart Uninstaller";
-            MainContentText.Text = "Scanning Windows Registry for installed software...\n\n";
-
-            // Run on background thread
-            var apps = await Task.Run(() => SmartUninstaller.GetInstalledApps());
-            
-            foreach (var app in apps)
-            {
-                MainContentText.Text += $"- {app}\n";
-            }
+            MainContent.Content = new VirusScannerView();
         }
 
-        private async void NavHardware_Click(object sender, RoutedEventArgs e)
+        private void NavHardware_Click(object sender, RoutedEventArgs e)
         {
-            ContentTitle.Text = "Hardware Analyzer";
-            MainContentText.Text = "Polling WMI for hardware specs...\n\n";
-
-            // Run on background thread
-            var hwInfo = await Task.Run(() => HardwareAnalyzer.GetSystemInfo());
-            MainContentText.Text += hwInfo;
+            MainContent.Content = new HardwareAnalyzerView();
         }
+
+        // Placeholders for remaining modules
+        private void NavUninstaller_Click(object sender, RoutedEventArgs e) { }
+        private void NavPower_Click(object sender, RoutedEventArgs e) { }
+        private void NavNetwork_Click(object sender, RoutedEventArgs e) { }
+        private void NavJunk_Click(object sender, RoutedEventArgs e) { }
+        private void NavDuplicate_Click(object sender, RoutedEventArgs e) { }
     }
 }

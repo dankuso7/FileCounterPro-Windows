@@ -9,7 +9,7 @@ namespace FileCounterPro_Windows
         public MainWindow()
         {
             InitializeComponent();
-            MainContent.Content = new DashboardView();
+            MainContent.Content = new VirusScannerView();
         }
 
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

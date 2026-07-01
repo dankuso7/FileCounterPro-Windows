@@ -12,6 +12,7 @@ namespace FileCounterPro_Windows.Views
         public string FileName { get; set; } = "";
         public string FilePath { get; set; } = "";
         public string Reason { get; set; } = "";
+        public string AIExplanation { get; set; } = "";
     }
 
     public partial class VirusScannerView : UserControl
@@ -77,11 +78,26 @@ namespace FileCounterPro_Windows.Views
                             {
                                 Dispatcher.Invoke(() =>
                                 {
+                                    string aiExp = "⚠️ **DELETION IMPACT ANALYSIS:**\n";
+                                    string lowerPath = file.ToLower();
+                                    if (lowerPath.Contains("windows\\system32") || lowerPath.Contains("windows\\syswow64")) {
+                                        aiExp += "CRITICAL WARNING: This is a core Windows system folder. Deleting this may result in a Blue Screen of Death (BSOD) or prevent Windows from booting. Do not delete unless absolutely certain.";
+                                    } else if (lowerPath.Contains("steamapps\\common") || lowerPath.Contains("epic games") || lowerPath.Contains("program files")) {
+                                        aiExp += "This appears to belong to a Game or Application installation. Deleting it will likely break the game, requiring you to verify game files or reinstall. False positives occur often with game anti-cheat or DRM systems.";
+                                    } else if (lowerPath.Contains("temp") || lowerPath.Contains("appdata\\local\\temp")) {
+                                        aiExp += "This file is in a temporary directory. It is generally safe to delete and will not break core system functionality.";
+                                    } else if (lowerPath.Contains("appdata\\roaming") || lowerPath.Contains("appdata\\local")) {
+                                        aiExp += "This file is in your AppData directory. Deleting it might reset settings or break a specific application installed for your user account.";
+                                    } else {
+                                        aiExp += "Deleting this file will permanently remove it from your system. If it belongs to an app you use, that app may stop working.";
+                                    }
+
                                     _threats.Add(new ThreatResult
                                     {
                                         FileName = Path.GetFileName(file),
                                         FilePath = file,
-                                        Reason = $"Matched known malicious signature: {sig}"
+                                        Reason = $"Matched known malicious signature: {sig}",
+                                        AIExplanation = aiExp
                                     });
                                 });
                             }

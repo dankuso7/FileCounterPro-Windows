@@ -27,10 +27,11 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0">
+                                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
                                             <TextBlock Text="{Binding FileName}" Foreground="{StaticResource SciFiNeonMagenta}" FontWeight="Bold" FontSize="14"/>
                                             <TextBlock Text="{Binding FilePath}" Foreground="{StaticResource SciFiTextDim}" FontSize="11" Margin="0,2,0,0"/>
                                             <TextBlock Text="{Binding Reason}" Foreground="{StaticResource SciFiNeonMagenta}" FontSize="11" FontStyle="Italic" Margin="0,4,0,0" Opacity="0.8"/>
+                                            <TextBlock Text="{Binding AIExplanation}" Foreground="{StaticResource SciFiNeonCyan}" FontSize="10" TextWrapping="Wrap" Margin="0,4,0,0"/>
                                         </StackPanel>
                                         <Button Grid.Column="1" Content="🗑️ DELETE" Style="{StaticResource DangerButtonStyle}" Click="BtnDeleteThreat_Click" Tag="{Binding}"/>
                                     </Grid>

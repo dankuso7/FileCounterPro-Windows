@@ -1,69 +1,104 @@
 <Window x:Class="FileCounterPro_Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="FileCounter Pro (Windows Edition)" Height="750" Width="1100"
+        Title="FileCounter Pro" Height="800" Width="1200"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent">
-    
-    <Border CornerRadius="12" Background="{StaticResource SciFiBgDeep}" BorderBrush="{StaticResource SciFiNeonCyan}" BorderThickness="1">
+
+    <Border CornerRadius="14" Background="{StaticResource SciFiBgDeep}"
+            BorderBrush="{StaticResource SciFiNeonCyan}" BorderThickness="1">
+        <Border.Effect>
+            <DropShadowEffect Color="#00E6FF" BlurRadius="30" ShadowDepth="0" Opacity="0.25"/>
+        </Border.Effect>
         <Grid>
-            <!-- Title Bar for dragging -->
-            <Border Height="35" VerticalAlignment="Top" Background="#05050C" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown" CornerRadius="12,12,0,0">
+            <!-- Title Bar -->
+            <Border Height="40" VerticalAlignment="Top" Background="#08080F"
+                    MouseLeftButtonDown="TitleBar_MouseLeftButtonDown" CornerRadius="14,14,0,0">
                 <Grid>
-                    <TextBlock Text="FILE COUNTER PRO" Foreground="{StaticResource SciFiTextDim}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0" FontWeight="Bold"/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0">
+                        <Ellipse Width="8" Height="8" Fill="{StaticResource SciFiNeonCyan}" Margin="0,0,8,0"/>
+                        <TextBlock Text="FILE COUNTER PRO" FontSize="12" FontWeight="Black"
+                                   Foreground="{StaticResource SciFiNeonCyan}" VerticalAlignment="Center" FontFamily="Consolas"/>
+                        <TextBlock Text=" · WINDOWS EDITION" FontSize="10" Foreground="{StaticResource SciFiTextDim}"
+                                   VerticalAlignment="Center" FontFamily="Consolas"/>
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
-                        <Button Content="—" Width="30" Height="25" Background="Transparent" Foreground="White" BorderThickness="0" Click="BtnMinimize_Click"/>
-                        <Button Content="✕" Width="30" Height="25" Background="Transparent" Foreground="#FF3333" BorderThickness="0" Click="BtnClose_Click"/>
+                        <Button Content="—" Width="32" Height="28" Background="Transparent" Foreground="#888"
+                                BorderThickness="0" Click="BtnMinimize_Click" FontFamily="Consolas"/>
+                        <Button Content="✕" Width="32" Height="28" Background="Transparent" Foreground="#FF3333"
+                                BorderThickness="0" Click="BtnClose_Click" FontFamily="Consolas"/>
                     </StackPanel>
                 </Grid>
             </Border>
 
-            <Grid Margin="0,35,0,0">
+            <!-- Main Layout -->
+            <Grid Margin="0,40,0,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="260"/>
+                    <ColumnDefinition Width="220"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Sidebar -->
-                <Border Grid.Column="0" Background="{StaticResource SciFiBgPanel}" BorderBrush="{StaticResource SciFiNeonCyan}" BorderThickness="0,0,1,0">
-                    <StackPanel Margin="15,30,15,0">
-                        <TextBlock Text="MODULES" FontSize="12" Foreground="{StaticResource SciFiTextDim}" Margin="5,0,0,10" FontWeight="Bold"/>
-                        
-                        <Button Content="📊 Dashboard" Style="{StaticResource NeonButtonStyle}" Click="NavDashboard_Click"/>
-                        <Button Content="🛡️ Virus Scanner" Style="{StaticResource NeonButtonStyle}" Click="NavVirusScanner_Click"/>
-                        <Button Content="🗑️ Smart Uninstaller" Style="{StaticResource NeonButtonStyle}" Click="NavUninstaller_Click"/>
-                        <Button Content="💻 Hardware Analyzer" Style="{StaticResource NeonButtonStyle}" Click="NavHardware_Click"/>
-                        <Button Content="⚡ Live Power" Style="{StaticResource NeonButtonStyle}" Click="NavPower_Click"/>
-                        <Button Content="🌐 Network Monitor" Style="{StaticResource NeonButtonStyle}" Click="NavNetwork_Click"/>
-                        <Button Content="🧹 System Junk" Style="{StaticResource NeonButtonStyle}" Click="NavJunk_Click"/>
-                        <Button Content="👯 Duplicate Finder" Style="{StaticResource NeonButtonStyle}" Click="NavDuplicate_Click"/>
-                    </StackPanel>
+                <Border Grid.Column="0" Background="#0D0D1E"
+                        BorderBrush="{StaticResource SciFiNeonCyan}" BorderThickness="0,0,1,0">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="12,20,12,20">
+
+                            <!-- App Brand -->
+                            <Border Background="#1100E6FF" BorderBrush="{StaticResource SciFiNeonCyan}"
+                                    BorderThickness="1" CornerRadius="10" Padding="12,10" Margin="0,0,0,20">
+                                <StackPanel>
+                                    <TextBlock Text="◈ FILE COUNTER PRO" FontSize="11" FontWeight="Black"
+                                               Foreground="{StaticResource SciFiNeonCyan}" FontFamily="Consolas"/>
+                                    <TextBlock Text="Windows Edition" FontSize="9" Foreground="{StaticResource SciFiTextDim}"
+                                               FontFamily="Consolas" Margin="0,3,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Text="SYSTEM" FontSize="9" Foreground="{StaticResource SciFiTextDim}"
+                                       Margin="4,0,0,6" FontWeight="Bold" FontFamily="Consolas"/>
+                            <Button x:Name="BtnNavDashboard"    Content="📊  Dashboard"        Style="{StaticResource NeonButtonStyle}" Click="NavDashboard_Click"    Margin="0,2"/>
+                            <Button x:Name="BtnNavSensors"      Content="🌡️  Sensors"           Style="{StaticResource NeonButtonStyle}" Click="NavSensors_Click"      Margin="0,2"/>
+                            <Button x:Name="BtnNavActivity"     Content="📈  Activity Monitor"  Style="{StaticResource NeonButtonStyle}" Click="NavActivity_Click"     Margin="0,2"/>
+
+                            <Separator Background="#22FFFFFF" Margin="0,10"/>
+                            <TextBlock Text="TOOLS" FontSize="9" Foreground="{StaticResource SciFiTextDim}"
+                                       Margin="4,0,0,6" FontWeight="Bold" FontFamily="Consolas"/>
+                            <Button x:Name="BtnNavVirus"        Content="🛡️  Virus Scanner"     Style="{StaticResource NeonButtonStyle}" Click="NavVirusScanner_Click" Margin="0,2"/>
+                            <Button x:Name="BtnNavUninstaller"  Content="🗑️  Smart Uninstaller" Style="{StaticResource NeonButtonStyle}" Click="NavUninstaller_Click"  Margin="0,2"/>
+                            <Button x:Name="BtnNavJunk"         Content="🧹  System Junk"       Style="{StaticResource NeonButtonStyle}" Click="NavJunk_Click"         Margin="0,2"/>
+                            <Button x:Name="BtnNavDuplicate"    Content="👯  Duplicate Finder"  Style="{StaticResource NeonButtonStyle}" Click="NavDuplicate_Click"    Margin="0,2"/>
+                            <Button x:Name="BtnNavHardware"     Content="💻  Hardware Info"     Style="{StaticResource NeonButtonStyle}" Click="NavHardware_Click"     Margin="0,2"/>
+
+                            <Separator Background="#22FFFFFF" Margin="0,10"/>
+                            <TextBlock Text="NETWORK" FontSize="9" Foreground="{StaticResource SciFiTextDim}"
+                                       Margin="4,0,0,6" FontWeight="Bold" FontFamily="Consolas"/>
+                            <Button x:Name="BtnNavNetwork"      Content="🌐  Network Monitor"   Style="{StaticResource NeonButtonStyle}" Click="NavNetwork_Click"      Margin="0,2"/>
+                        </StackPanel>
+                    </ScrollViewer>
                 </Border>
 
-                <!-- Main Content Area -->
-                <ContentControl x:Name="MainContent" Grid.Column="1" Margin="20">
-                    <ContentControl.Style>
-                        <Style TargetType="ContentControl">
-                            <!-- Fade animation for views -->
-                            <Style.Triggers>
-                                <EventTrigger RoutedEvent="ContentControl.TargetUpdated">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" Duration="0:0:0.3"/>
-                                            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="20,40,20,0" To="20,20,20,20" Duration="0:0:0.3">
-                                                <ThicknessAnimation.EasingFunction>
-                                                    <CubicEase EasingMode="EaseOut"/>
-                                                </ThicknessAnimation.EasingFunction>
-                                            </ThicknessAnimation>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ContentControl.Style>
-                </ContentControl>
+                <!-- Content Area with fade animation -->
+                <Border Grid.Column="1" Background="{StaticResource SciFiBgDeep}">
+                    <ContentControl x:Name="MainContent" Margin="0">
+                        <ContentControl.Style>
+                            <Style TargetType="ContentControl">
+                                <Style.Triggers>
+                                    <EventTrigger RoutedEvent="ContentControl.TargetUpdated">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                 From="0.0" To="1.0" Duration="0:0:0.25"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentControl.Style>
+                    </ContentControl>
+                </Border>
             </Grid>
         </Grid>
     </Border>

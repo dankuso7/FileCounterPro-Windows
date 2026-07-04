@@ -1,0 +1,84 @@
+<UserControl x:Class="FileCounterPro_Windows.Views.SystemJunkView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource SciFiBgDeep}" FontFamily="Consolas">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+            <TextBlock Text="🧹" FontSize="28" VerticalAlignment="Center" Margin="0,0,12,0"/>
+            <StackPanel>
+                <TextBlock Text="SYSTEM JUNK CLEANER" FontSize="22" FontWeight="Black" Foreground="{StaticResource SciFiNeonCyan}">
+                    <TextBlock.Effect><DropShadowEffect Color="#00E6FF" BlurRadius="12" ShadowDepth="0" Opacity="0.6"/></TextBlock.Effect>
+                </TextBlock>
+                <TextBlock Text="Temp files · Browser cache · Windows update · Thumbnails · Logs" FontSize="11" Foreground="{StaticResource SciFiTextDim}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Action Bar -->
+        <Grid Grid.Row="1" Margin="0,0,0,14">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="BtnScan" Content="🔍 SCAN FOR JUNK" Style="{StaticResource NeonButtonStyle}" Padding="16,10" Click="BtnScan_Click"/>
+            <Border Grid.Column="1" Background="{StaticResource SciFiBgPanel}" BorderBrush="{StaticResource SciFiNeonCyan}" BorderThickness="1" CornerRadius="8" Padding="12,0" Margin="12,0">
+                <TextBlock x:Name="TxtTotal" Text="Scan to find junk files…" FontSize="13" FontWeight="Bold" Foreground="{StaticResource SciFiNeonCyan}" VerticalAlignment="Center"/>
+            </Border>
+            <Button Grid.Column="2" x:Name="BtnClean" Content="🗑️ CLEAN SELECTED" Style="{StaticResource DangerButtonStyle}" Padding="16,10" Click="BtnClean_Click" IsEnabled="False"/>
+        </Grid>
+
+        <!-- Progress -->
+        <ProgressBar Grid.Row="2" x:Name="ScanProgress" Height="6" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonCyan}" Margin="0,0,0,14" Visibility="Collapsed" IsIndeterminate="True" CornerRadius="3"/>
+
+        <!-- Junk List -->
+        <ListView Grid.Row="3" x:Name="LstJunk"
+                  Background="{StaticResource SciFiBgPanel}"
+                  BorderBrush="{StaticResource SciFiNeonCyan}" BorderThickness="1"
+                  Foreground="White" FontFamily="Consolas">
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    <Setter Property="BorderBrush" Value="#15FFFFFF"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#1500E6FF"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="36">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsSelected}" Foreground="{StaticResource SciFiNeonCyan}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="CATEGORY" Width="200" DisplayMemberBinding="{Binding Category}"/>
+                    <GridViewColumn Header="SIZE" Width="100" DisplayMemberBinding="{Binding SizeText}"/>
+                    <GridViewColumn Header="FILES" Width="80" DisplayMemberBinding="{Binding FileCount}"/>
+                    <GridViewColumn Header="PATH" Width="280" DisplayMemberBinding="{Binding Path}"/>
+                    <GridViewColumn Header="STATUS" Width="100" DisplayMemberBinding="{Binding Status}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <!-- Status -->
+        <Border Grid.Row="4" x:Name="StatusPanel" Background="{StaticResource SciFiBgPanel}" BorderBrush="#33FFFFFF" BorderThickness="1" CornerRadius="8" Padding="12" Margin="0,12,0,0" Visibility="Collapsed">
+            <TextBlock x:Name="TxtStatus" Text="" FontSize="11" Foreground="{StaticResource SciFiNeonGreen}" TextWrapping="Wrap"/>
+        </Border>
+    </Grid>
+</UserControl>

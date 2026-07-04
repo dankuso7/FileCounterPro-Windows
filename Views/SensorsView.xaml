@@ -1,0 +1,285 @@
+<UserControl x:Class="FileCounterPro_Windows.Views.SensorsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource SciFiBgDeep}" FontFamily="Consolas">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24">
+
+            <!-- Header -->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                <TextBlock Text="🌡️" FontSize="28" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <StackPanel>
+                    <TextBlock Text="THERMAL SENSORS" FontSize="22" FontWeight="Black" Foreground="{StaticResource SciFiNeonCyan}">
+                        <TextBlock.Effect><DropShadowEffect Color="#00E6FF" BlurRadius="12" ShadowDepth="0" Opacity="0.6"/></TextBlock.Effect>
+                    </TextBlock>
+                    <TextBlock Text="Live temperatures · Fan speed · Power mode" FontSize="11" Foreground="{StaticResource SciFiTextDim}"/>
+                </StackPanel>
+                <Border Background="#1100FF80" BorderBrush="{StaticResource SciFiNeonGreen}" BorderThickness="1" CornerRadius="8" Padding="8,4" Margin="20,0,0,0" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Width="7" Height="7" Fill="{StaticResource SciFiNeonGreen}" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="LIVE" FontSize="10" FontWeight="Black" Foreground="{StaticResource SciFiNeonGreen}"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- Fan Banner -->
+            <Border Background="{StaticResource SciFiBgPanel}" BorderBrush="{StaticResource SciFiNeonCyan}" BorderThickness="1" CornerRadius="12" Padding="20" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" Width="64" Height="64" CornerRadius="32" Background="#1100E6FF" Margin="0,0,20,0">
+                        <TextBlock x:Name="FanIcon" Text="🌀" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                            <TextBlock x:Name="TxtFanRPM" Text="1200" FontSize="36" FontWeight="Black" Foreground="White"/>
+                            <TextBlock Text=" RPM" FontSize="14" FontWeight="Bold" Foreground="{StaticResource SciFiTextDim}" VerticalAlignment="Bottom" Margin="0,0,0,5"/>
+                        </StackPanel>
+                        <ProgressBar x:Name="FanBar" Height="8" Maximum="4200" Value="1200" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonCyan}" Margin="0,0,0,6"/>
+                        <Grid>
+                            <TextBlock Text="1000 RPM (min)" FontSize="9" Foreground="{StaticResource SciFiTextDim}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="4200 RPM (max)" FontSize="9" Foreground="{StaticResource SciFiTextDim}" HorizontalAlignment="Right"/>
+                        </Grid>
+                    </StackPanel>
+
+                    <Border Grid.Column="2" Background="#1100E6FF" BorderBrush="{StaticResource SciFiNeonCyan}" BorderThickness="1" CornerRadius="8" Padding="14,10" Margin="20,0,0,0">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock x:Name="TxtFanStatus" Text="IDLE" FontSize="13" FontWeight="Black" Foreground="{StaticResource SciFiNeonCyan}" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="TxtFanPct" Text="0%" FontSize="11" Foreground="{StaticResource SciFiTextDim}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Physical Fan Control -->
+            <Border x:Name="StressPanel" Background="{StaticResource SciFiBgPanel}" BorderBrush="#33FFFFFF" BorderThickness="1" CornerRadius="12" Padding="16" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" Width="46" Height="46" CornerRadius="23" Background="#15FFFFFF" Margin="0,0,14,0" VerticalAlignment="Center">
+                        <TextBlock x:Name="StressIcon" Text="💨" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock x:Name="StressTitle" Text="PHYSICAL FAN CONTROL" FontSize="12" FontWeight="Black" Foreground="White"/>
+                        <TextBlock x:Name="StressDesc" Text="Stress all CPU cores to force macOS to ramp the physical fan via thermal load" FontSize="10" Foreground="{StaticResource SciFiTextDim}" TextWrapping="Wrap"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button x:Name="Btn15s" Content="15s" Style="{StaticResource NeonButtonStyle}" Padding="12,7" Margin="4,0" Click="Stress15_Click"/>
+                        <Button x:Name="Btn30s" Content="30s" Style="{StaticResource NeonButtonStyle}" Padding="12,7" Margin="4,0" Click="Stress30_Click"/>
+                        <Button x:Name="Btn60s" Content="60s" Style="{StaticResource NeonButtonStyle}" Padding="12,7" Margin="4,0" Click="Stress60_Click"/>
+                        <Button x:Name="BtnStop" Content="■ STOP" Style="{StaticResource DangerButtonStyle}" Padding="12,7" Margin="8,0,0,0" Visibility="Collapsed" Click="StressStop_Click"/>
+                        <Border x:Name="CountdownBorder" Width="44" Height="44" CornerRadius="22" BorderBrush="{StaticResource SciFiNeonMagenta}" BorderThickness="2" Margin="8,0,0,0" Visibility="Collapsed" VerticalAlignment="Center">
+                            <TextBlock x:Name="TxtCountdown" Text="30" FontSize="13" FontWeight="Black" Foreground="{StaticResource SciFiNeonMagenta}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Temperature Grid -->
+            <TextBlock Text="TEMPERATURE SENSORS" FontSize="12" FontWeight="Black" Foreground="{StaticResource SciFiTextDim}" Margin="0,0,0,10"/>
+            <UniformGrid x:Name="TempGrid" Columns="3" Margin="0,0,0,16">
+
+                <!-- CPU Card -->
+                <Border Margin="0,0,8,8" Background="{StaticResource SciFiBgDeep}" BorderBrush="{StaticResource SciFiNeonCyan}" BorderThickness="1" CornerRadius="12" Padding="16">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,8">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="⚙" FontSize="13" Foreground="{StaticResource SciFiNeonCyan}" Margin="0,0,6,0"/>
+                                <TextBlock Text="CPU" FontSize="9" FontWeight="Bold" Foreground="{StaticResource SciFiTextDim}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <Border x:Name="CpuBadge" HorizontalAlignment="Right" Background="#1100FF80" BorderBrush="{StaticResource SciFiNeonGreen}" BorderThickness="1" CornerRadius="4" Padding="5,2">
+                                <TextBlock x:Name="CpuBadgeTxt" Text="OK" FontSize="8" FontWeight="Black" Foreground="{StaticResource SciFiNeonGreen}"/>
+                            </Border>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="TxtCpuTemp" Text="45" FontSize="36" FontWeight="Black" Foreground="White"/>
+                            <TextBlock Text="°C" FontSize="14" FontWeight="Bold" Foreground="{StaticResource SciFiNeonCyan}" VerticalAlignment="Bottom" Margin="2,0,0,5"/>
+                        </StackPanel>
+                        <ProgressBar x:Name="CpuTempBar" Height="5" Maximum="90" Value="45" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4" CornerRadius="3"/>
+                        <Grid>
+                            <TextBlock Text="25°" FontSize="7" Foreground="{StaticResource SciFiTextDim}"/>
+                            <TextBlock Text="W:75°" FontSize="7" Foreground="#B3FF9900" HorizontalAlignment="Center"/>
+                            <TextBlock Text="C:90°" FontSize="7" Foreground="#B3FF0099" HorizontalAlignment="Right"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- CPU Package Card -->
+                <Border Margin="4,0,4,8" Background="{StaticResource SciFiBgDeep}" BorderBrush="{StaticResource SciFiNeonCyan}" BorderThickness="1" CornerRadius="12" Padding="16">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,8">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="🌡" FontSize="13" Foreground="{StaticResource SciFiNeonCyan}" Margin="0,0,6,0"/>
+                                <TextBlock Text="CPU PKG" FontSize="9" FontWeight="Bold" Foreground="{StaticResource SciFiTextDim}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <Border x:Name="CpuPkgBadge" HorizontalAlignment="Right" Background="#1100FF80" BorderBrush="{StaticResource SciFiNeonGreen}" BorderThickness="1" CornerRadius="4" Padding="5,2">
+                                <TextBlock x:Name="CpuPkgBadgeTxt" Text="OK" FontSize="8" FontWeight="Black" Foreground="{StaticResource SciFiNeonGreen}"/>
+                            </Border>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="TxtCpuPkgTemp" Text="44" FontSize="36" FontWeight="Black" Foreground="White"/>
+                            <TextBlock Text="°C" FontSize="14" FontWeight="Bold" Foreground="{StaticResource SciFiNeonCyan}" VerticalAlignment="Bottom" Margin="2,0,0,5"/>
+                        </StackPanel>
+                        <ProgressBar x:Name="CpuPkgBar" Height="5" Maximum="90" Value="44" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4" CornerRadius="3"/>
+                        <Grid>
+                            <TextBlock Text="25°" FontSize="7" Foreground="{StaticResource SciFiTextDim}"/>
+                            <TextBlock Text="W:75°" FontSize="7" Foreground="#B3FF9900" HorizontalAlignment="Center"/>
+                            <TextBlock Text="C:90°" FontSize="7" Foreground="#B3FF0099" HorizontalAlignment="Right"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- GPU Card -->
+                <Border Margin="8,0,0,8" Background="{StaticResource SciFiBgDeep}" BorderBrush="{StaticResource SciFiNeonMagenta}" BorderThickness="1" CornerRadius="12" Padding="16">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,8">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="🖥" FontSize="13" Foreground="{StaticResource SciFiNeonMagenta}" Margin="0,0,6,0"/>
+                                <TextBlock Text="GPU" FontSize="9" FontWeight="Bold" Foreground="{StaticResource SciFiTextDim}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <Border x:Name="GpuBadge" HorizontalAlignment="Right" Background="#1100FF80" BorderBrush="{StaticResource SciFiNeonGreen}" BorderThickness="1" CornerRadius="4" Padding="5,2">
+                                <TextBlock x:Name="GpuBadgeTxt" Text="OK" FontSize="8" FontWeight="Black" Foreground="{StaticResource SciFiNeonGreen}"/>
+                            </Border>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="TxtGpuTemp" Text="43" FontSize="36" FontWeight="Black" Foreground="White"/>
+                            <TextBlock Text="°C" FontSize="14" FontWeight="Bold" Foreground="{StaticResource SciFiNeonMagenta}" VerticalAlignment="Bottom" Margin="2,0,0,5"/>
+                        </StackPanel>
+                        <ProgressBar x:Name="GpuTempBar" Height="5" Maximum="85" Value="43" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4" CornerRadius="3"/>
+                        <Grid>
+                            <TextBlock Text="25°" FontSize="7" Foreground="{StaticResource SciFiTextDim}"/>
+                            <TextBlock Text="W:70°" FontSize="7" Foreground="#B3FF9900" HorizontalAlignment="Center"/>
+                            <TextBlock Text="C:85°" FontSize="7" Foreground="#B3FF0099" HorizontalAlignment="Right"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Memory Card -->
+                <Border Margin="0,0,8,8" Background="{StaticResource SciFiBgDeep}" BorderBrush="#FFFF9900" BorderThickness="1" CornerRadius="12" Padding="16">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,8">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="💾" FontSize="13" Foreground="#FFFF9900" Margin="0,0,6,0"/>
+                                <TextBlock Text="MEMORY" FontSize="9" FontWeight="Bold" Foreground="{StaticResource SciFiTextDim}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <Border x:Name="MemBadge" HorizontalAlignment="Right" Background="#1100FF80" BorderBrush="{StaticResource SciFiNeonGreen}" BorderThickness="1" CornerRadius="4" Padding="5,2">
+                                <TextBlock x:Name="MemBadgeTxt" Text="OK" FontSize="8" FontWeight="Black" Foreground="{StaticResource SciFiNeonGreen}"/>
+                            </Border>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="TxtMemTemp" Text="36" FontSize="36" FontWeight="Black" Foreground="White"/>
+                            <TextBlock Text="°C" FontSize="14" FontWeight="Bold" Foreground="#FFFF9900" VerticalAlignment="Bottom" Margin="2,0,0,5"/>
+                        </StackPanel>
+                        <ProgressBar x:Name="MemTempBar" Height="5" Maximum="70" Value="36" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4" CornerRadius="3"/>
+                        <Grid>
+                            <TextBlock Text="25°" FontSize="7" Foreground="{StaticResource SciFiTextDim}"/>
+                            <TextBlock Text="W:55°" FontSize="7" Foreground="#B3FF9900" HorizontalAlignment="Center"/>
+                            <TextBlock Text="C:70°" FontSize="7" Foreground="#B3FF0099" HorizontalAlignment="Right"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- SSD Card -->
+                <Border Margin="4,0,4,8" Background="{StaticResource SciFiBgDeep}" BorderBrush="{StaticResource SciFiNeonPurple}" BorderThickness="1" CornerRadius="12" Padding="16">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,8">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="💿" FontSize="13" Foreground="{StaticResource SciFiNeonPurple}" Margin="0,0,6,0"/>
+                                <TextBlock Text="SSD" FontSize="9" FontWeight="Bold" Foreground="{StaticResource SciFiTextDim}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <Border x:Name="SsdBadge" HorizontalAlignment="Right" Background="#1100FF80" BorderBrush="{StaticResource SciFiNeonGreen}" BorderThickness="1" CornerRadius="4" Padding="5,2">
+                                <TextBlock x:Name="SsdBadgeTxt" Text="OK" FontSize="8" FontWeight="Black" Foreground="{StaticResource SciFiNeonGreen}"/>
+                            </Border>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="TxtSsdTemp" Text="33" FontSize="36" FontWeight="Black" Foreground="White"/>
+                            <TextBlock Text="°C" FontSize="14" FontWeight="Bold" Foreground="{StaticResource SciFiNeonPurple}" VerticalAlignment="Bottom" Margin="2,0,0,5"/>
+                        </StackPanel>
+                        <ProgressBar x:Name="SsdTempBar" Height="5" Maximum="65" Value="33" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4" CornerRadius="3"/>
+                        <Grid>
+                            <TextBlock Text="25°" FontSize="7" Foreground="{StaticResource SciFiTextDim}"/>
+                            <TextBlock Text="W:50°" FontSize="7" Foreground="#B3FF9900" HorizontalAlignment="Center"/>
+                            <TextBlock Text="C:65°" FontSize="7" Foreground="#B3FF0099" HorizontalAlignment="Right"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Motherboard Card -->
+                <Border Margin="8,0,0,8" Background="{StaticResource SciFiBgDeep}" BorderBrush="{StaticResource SciFiNeonGreen}" BorderThickness="1" CornerRadius="12" Padding="16">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,8">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="🔌" FontSize="13" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,0,6,0"/>
+                                <TextBlock Text="MOTHERBOARD" FontSize="9" FontWeight="Bold" Foreground="{StaticResource SciFiTextDim}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <Border x:Name="MbBadge" HorizontalAlignment="Right" Background="#1100FF80" BorderBrush="{StaticResource SciFiNeonGreen}" BorderThickness="1" CornerRadius="4" Padding="5,2">
+                                <TextBlock x:Name="MbBadgeTxt" Text="OK" FontSize="8" FontWeight="Black" Foreground="{StaticResource SciFiNeonGreen}"/>
+                            </Border>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="TxtMbTemp" Text="32" FontSize="36" FontWeight="Black" Foreground="White"/>
+                            <TextBlock Text="°C" FontSize="14" FontWeight="Bold" Foreground="{StaticResource SciFiNeonGreen}" VerticalAlignment="Bottom" Margin="2,0,0,5"/>
+                        </StackPanel>
+                        <ProgressBar x:Name="MbTempBar" Height="5" Maximum="60" Value="32" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4" CornerRadius="3"/>
+                        <Grid>
+                            <TextBlock Text="25°" FontSize="7" Foreground="{StaticResource SciFiTextDim}"/>
+                            <TextBlock Text="W:45°" FontSize="7" Foreground="#B3FF9900" HorizontalAlignment="Center"/>
+                            <TextBlock Text="C:60°" FontSize="7" Foreground="#B3FF0099" HorizontalAlignment="Right"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+            </UniformGrid>
+
+            <!-- Power Mode -->
+            <Border Background="{StaticResource SciFiBgPanel}" BorderBrush="#33FFFFFF" BorderThickness="1" CornerRadius="12" Padding="18" Margin="0,0,0,8">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                        <TextBlock Text="⚡" FontSize="18" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="POWER MODE" FontSize="15" FontWeight="Black" Foreground="White" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <UniformGrid Columns="3" Margin="0,0,0,12">
+                        <Button x:Name="BtnBalanced" Margin="0,0,6,0" Click="PowerBalanced_Click" Style="{StaticResource NeonButtonStyle}" Padding="12">
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="⚡" FontSize="22" HorizontalAlignment="Center"/>
+                                <TextBlock Text="BALANCED" FontSize="9" FontWeight="Black" HorizontalAlignment="Center" Margin="0,6,0,4"/>
+                                <TextBlock Text="Standard power.&#x0a;Best for everyday work." FontSize="8" Foreground="{StaticResource SciFiTextDim}" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BtnHighPerf" Margin="3,0" Click="PowerHigh_Click" Style="{StaticResource NeonButtonStyle}" Padding="12" BorderBrush="{StaticResource SciFiNeonMagenta}" Foreground="{StaticResource SciFiNeonMagenta}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="🎮" FontSize="22" HorizontalAlignment="Center"/>
+                                <TextBlock Text="HIGH PERFORMANCE" FontSize="9" FontWeight="Black" HorizontalAlignment="Center" Margin="0,6,0,4" Foreground="{StaticResource SciFiNeonMagenta}"/>
+                                <TextBlock Text="Max performance.&#x0a;Best for gaming." FontSize="8" Foreground="{StaticResource SciFiTextDim}" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BtnPowerSaver" Margin="6,0,0,0" Click="PowerSaver_Click" Style="{StaticResource NeonButtonStyle}" Padding="12" BorderBrush="{StaticResource SciFiNeonGreen}" Foreground="{StaticResource SciFiNeonGreen}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="🍃" FontSize="22" HorizontalAlignment="Center"/>
+                                <TextBlock Text="POWER SAVER" FontSize="9" FontWeight="Black" HorizontalAlignment="Center" Margin="0,6,0,4" Foreground="{StaticResource SciFiNeonGreen}"/>
+                                <TextBlock Text="Minimum power.&#x0a;Quiet &amp; cool." FontSize="8" Foreground="{StaticResource SciFiTextDim}" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Button>
+                    </UniformGrid>
+
+                    <Border x:Name="PowerStatusPanel" Background="{StaticResource SciFiBgDeep}" BorderBrush="#33FFFFFF" BorderThickness="1" CornerRadius="8" Padding="12" Visibility="Collapsed">
+                        <TextBlock x:Name="TxtPowerStatus" Text="" FontSize="11" Foreground="{StaticResource SciFiNeonGreen}" TextWrapping="Wrap"/>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

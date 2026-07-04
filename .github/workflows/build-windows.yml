@@ -24,14 +24,24 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore FileCounterPro.csproj
 
-    - name: Build and Publish self-contained executable
-      run: dotnet publish FileCounterPro.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish
+    - name: Build (x64)
+      run: dotnet publish FileCounterPro.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish-x64
+
+    - name: Build (ARM64)
+      run: dotnet publish FileCounterPro.csproj -c Release -r win-arm64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish-arm64
+
+    - name: Rename Executables
+      run: |
+        move .\publish-x64\FileCounterPro.exe .\FileCounterPro_x64.exe
+        move .\publish-arm64\FileCounterPro.exe .\FileCounterPro_ARM64.exe
 
     - name: Create Release and Upload EXE
       uses: softprops/action-gh-release@v1
       with:
         tag_name: v1.0.${{ github.run_number }}
         name: FileCounterPro Windows (Latest)
-        files: ./publish/FileCounterPro.exe
+        files: |
+          FileCounterPro_x64.exe
+          FileCounterPro_ARM64.exe
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

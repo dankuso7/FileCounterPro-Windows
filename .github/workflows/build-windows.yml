@@ -32,6 +32,6 @@ jobs:
       with:
         tag_name: v1.0.${{ github.run_number }}
         name: FileCounterPro Windows (Latest)
-        files: ./publish/FileCounterPro_Windows.exe
+        files: ./publish/FileCounterPro.exe
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

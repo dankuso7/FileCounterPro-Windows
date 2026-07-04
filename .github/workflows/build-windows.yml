@@ -1,4 +1,4 @@
-name: Build and Commit Windows App
+name: Release Windows App
 
 on:
   push:
@@ -25,17 +25,13 @@ jobs:
       run: dotnet restore FileCounterPro.csproj
 
     - name: Build and Publish self-contained executable
-      run: dotnet publish FileCounterPro.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish > build_log.txt 2>&1
-      continue-on-error: true
+      run: dotnet publish FileCounterPro.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish
 
-    - name: Commit Exe to Repo
-      run: |
-        if exist "publish\FileCounterPro_Windows.exe" (
-            copy "publish\FileCounterPro_Windows.exe" "FileCounterPro_Windows.exe"
-        )
-        git config --global user.name "GitHub Actions Bot"
-        git config --global user.email "actions@github.com"
-        git add FileCounterPro_Windows.exe
-        git add build_log.txt
-        git commit -m "🚀 Auto-build: Update Windows Exe and Log" || echo "No changes to commit"
-        git push
+    - name: Create Release and Upload EXE
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v1.0.${{ github.run_number }}
+        name: FileCounterPro Windows (Latest)
+        files: ./publish/FileCounterPro_Windows.exe
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

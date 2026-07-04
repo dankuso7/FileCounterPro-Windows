@@ -30,10 +30,11 @@ jobs:
     - name: Build (ARM64)
       run: dotnet publish FileCounterPro.csproj -c Release -r win-arm64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ./publish-arm64
 
-    - name: Rename Executables
+    - name: Compile Inno Setup Installers
       run: |
-        move .\publish-x64\FileCounterPro.exe .\FileCounterPro_x64.exe
-        move .\publish-arm64\FileCounterPro.exe .\FileCounterPro_ARM64.exe
+        "%programfiles(x86)%\Inno Setup 6\iscc.exe" installer_x64.iss
+        "%programfiles(x86)%\Inno Setup 6\iscc.exe" installer_arm64.iss
+      shell: cmd
 
     - name: Create Release and Upload EXE
       uses: softprops/action-gh-release@v1
@@ -41,7 +42,7 @@ jobs:
         tag_name: v1.0.${{ github.run_number }}
         name: FileCounterPro Windows (Latest)
         files: |
-          FileCounterPro_x64.exe
-          FileCounterPro_ARM64.exe
+          ./Installer/FileCounterPro_Setup_x64.exe
+          ./Installer/FileCounterPro_Setup_ARM64.exe
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -38,7 +38,7 @@
         </Grid>
 
         <!-- Progress -->
-        <ProgressBar Grid.Row="2" x:Name="ScanProgress" Height="6" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonCyan}" Margin="0,0,0,14" Visibility="Collapsed" IsIndeterminate="True" CornerRadius="3"/>
+        <ProgressBar Grid.Row="2" x:Name="ScanProgress" Height="6" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonCyan}" Margin="0,0,0,14" Visibility="Collapsed" IsIndeterminate="True"/>
 
         <!-- Junk List -->
         <ListView Grid.Row="3" x:Name="LstJunk"

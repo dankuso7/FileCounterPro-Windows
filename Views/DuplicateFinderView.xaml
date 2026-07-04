@@ -41,7 +41,7 @@
 
         <!-- Progress -->
         <ProgressBar Grid.Row="2" x:Name="ScanProgress" Height="6" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonCyan}"
-                     Margin="0,0,0,10" Visibility="Collapsed" IsIndeterminate="False" CornerRadius="3"/>
+                     Margin="0,0,0,10" Visibility="Collapsed" IsIndeterminate="False"/>
 
         <!-- Stats Bar -->
         <Border Grid.Row="3" x:Name="StatsBar" Background="{StaticResource SciFiBgPanel}" BorderBrush="{StaticResource SciFiNeonMagenta}"

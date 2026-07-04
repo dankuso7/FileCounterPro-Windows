@@ -39,7 +39,7 @@
                         <TextBlock x:Name="TxtCpuPct" Text="0" FontSize="36" FontWeight="Black" Foreground="White"/>
                         <TextBlock Text="%" FontSize="20" FontWeight="Bold" Foreground="{StaticResource SciFiNeonCyan}" VerticalAlignment="Bottom" Margin="2,0,0,5"/>
                     </StackPanel>
-                    <ProgressBar x:Name="CpuBar" Height="6" Maximum="100" Value="0" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonCyan}" Margin="0,8,0,0" CornerRadius="3"/>
+                    <ProgressBar x:Name="CpuBar" Height="6" Maximum="100" Value="0" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonCyan}" Margin="0,8,0,0"/>
                 </StackPanel>
             </Border>
 
@@ -54,7 +54,7 @@
                         <TextBlock x:Name="TxtGpuPct" Text="0" FontSize="36" FontWeight="Black" Foreground="White"/>
                         <TextBlock Text="%" FontSize="20" FontWeight="Bold" Foreground="{StaticResource SciFiNeonMagenta}" VerticalAlignment="Bottom" Margin="2,0,0,5"/>
                     </StackPanel>
-                    <ProgressBar x:Name="GpuBar" Height="6" Maximum="100" Value="0" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonMagenta}" Margin="0,8,0,0" CornerRadius="3"/>
+                    <ProgressBar x:Name="GpuBar" Height="6" Maximum="100" Value="0" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonMagenta}" Margin="0,8,0,0"/>
                 </StackPanel>
             </Border>
 
@@ -69,7 +69,7 @@
                         <TextBlock x:Name="TxtRamUsed" Text="0.0" FontSize="36" FontWeight="Black" Foreground="White"/>
                         <TextBlock Text=" GB" FontSize="14" FontWeight="Bold" Foreground="#FFFF9900" VerticalAlignment="Bottom" Margin="0,0,0,5"/>
                     </StackPanel>
-                    <ProgressBar x:Name="RamBar" Height="6" Maximum="100" Value="0" Background="#15FFFFFF" Foreground="#FFFF9900" Margin="0,4,0,0" CornerRadius="3"/>
+                    <ProgressBar x:Name="RamBar" Height="6" Maximum="100" Value="0" Background="#15FFFFFF" Foreground="#FFFF9900" Margin="0,4,0,0"/>
                     <TextBlock x:Name="TxtRamTotal" Text="of 0 GB" FontSize="9" Foreground="{StaticResource SciFiTextDim}" Margin="0,4,0,0"/>
                 </StackPanel>
             </Border>

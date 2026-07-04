@@ -106,7 +106,7 @@
                             <TextBlock x:Name="TxtCpuTemp" Text="45" FontSize="36" FontWeight="Black" Foreground="White"/>
                             <TextBlock Text="°C" FontSize="14" FontWeight="Bold" Foreground="{StaticResource SciFiNeonCyan}" VerticalAlignment="Bottom" Margin="2,0,0,5"/>
                         </StackPanel>
-                        <ProgressBar x:Name="CpuTempBar" Height="5" Maximum="90" Value="45" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4" CornerRadius="3"/>
+                        <ProgressBar x:Name="CpuTempBar" Height="5" Maximum="90" Value="45" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4"/>
                         <Grid>
                             <TextBlock Text="25°" FontSize="7" Foreground="{StaticResource SciFiTextDim}"/>
                             <TextBlock Text="W:75°" FontSize="7" Foreground="#B3FF9900" HorizontalAlignment="Center"/>
@@ -131,7 +131,7 @@
                             <TextBlock x:Name="TxtCpuPkgTemp" Text="44" FontSize="36" FontWeight="Black" Foreground="White"/>
                             <TextBlock Text="°C" FontSize="14" FontWeight="Bold" Foreground="{StaticResource SciFiNeonCyan}" VerticalAlignment="Bottom" Margin="2,0,0,5"/>
                         </StackPanel>
-                        <ProgressBar x:Name="CpuPkgBar" Height="5" Maximum="90" Value="44" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4" CornerRadius="3"/>
+                        <ProgressBar x:Name="CpuPkgBar" Height="5" Maximum="90" Value="44" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4"/>
                         <Grid>
                             <TextBlock Text="25°" FontSize="7" Foreground="{StaticResource SciFiTextDim}"/>
                             <TextBlock Text="W:75°" FontSize="7" Foreground="#B3FF9900" HorizontalAlignment="Center"/>
@@ -156,7 +156,7 @@
                             <TextBlock x:Name="TxtGpuTemp" Text="43" FontSize="36" FontWeight="Black" Foreground="White"/>
                             <TextBlock Text="°C" FontSize="14" FontWeight="Bold" Foreground="{StaticResource SciFiNeonMagenta}" VerticalAlignment="Bottom" Margin="2,0,0,5"/>
                         </StackPanel>
-                        <ProgressBar x:Name="GpuTempBar" Height="5" Maximum="85" Value="43" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4" CornerRadius="3"/>
+                        <ProgressBar x:Name="GpuTempBar" Height="5" Maximum="85" Value="43" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4"/>
                         <Grid>
                             <TextBlock Text="25°" FontSize="7" Foreground="{StaticResource SciFiTextDim}"/>
                             <TextBlock Text="W:70°" FontSize="7" Foreground="#B3FF9900" HorizontalAlignment="Center"/>
@@ -181,7 +181,7 @@
                             <TextBlock x:Name="TxtMemTemp" Text="36" FontSize="36" FontWeight="Black" Foreground="White"/>
                             <TextBlock Text="°C" FontSize="14" FontWeight="Bold" Foreground="#FFFF9900" VerticalAlignment="Bottom" Margin="2,0,0,5"/>
                         </StackPanel>
-                        <ProgressBar x:Name="MemTempBar" Height="5" Maximum="70" Value="36" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4" CornerRadius="3"/>
+                        <ProgressBar x:Name="MemTempBar" Height="5" Maximum="70" Value="36" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4"/>
                         <Grid>
                             <TextBlock Text="25°" FontSize="7" Foreground="{StaticResource SciFiTextDim}"/>
                             <TextBlock Text="W:55°" FontSize="7" Foreground="#B3FF9900" HorizontalAlignment="Center"/>
@@ -206,7 +206,7 @@
                             <TextBlock x:Name="TxtSsdTemp" Text="33" FontSize="36" FontWeight="Black" Foreground="White"/>
                             <TextBlock Text="°C" FontSize="14" FontWeight="Bold" Foreground="{StaticResource SciFiNeonPurple}" VerticalAlignment="Bottom" Margin="2,0,0,5"/>
                         </StackPanel>
-                        <ProgressBar x:Name="SsdTempBar" Height="5" Maximum="65" Value="33" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4" CornerRadius="3"/>
+                        <ProgressBar x:Name="SsdTempBar" Height="5" Maximum="65" Value="33" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4"/>
                         <Grid>
                             <TextBlock Text="25°" FontSize="7" Foreground="{StaticResource SciFiTextDim}"/>
                             <TextBlock Text="W:50°" FontSize="7" Foreground="#B3FF9900" HorizontalAlignment="Center"/>
@@ -231,7 +231,7 @@
                             <TextBlock x:Name="TxtMbTemp" Text="32" FontSize="36" FontWeight="Black" Foreground="White"/>
                             <TextBlock Text="°C" FontSize="14" FontWeight="Bold" Foreground="{StaticResource SciFiNeonGreen}" VerticalAlignment="Bottom" Margin="2,0,0,5"/>
                         </StackPanel>
-                        <ProgressBar x:Name="MbTempBar" Height="5" Maximum="60" Value="32" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4" CornerRadius="3"/>
+                        <ProgressBar x:Name="MbTempBar" Height="5" Maximum="60" Value="32" Background="#15FFFFFF" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,8,0,4"/>
                         <Grid>
                             <TextBlock Text="25°" FontSize="7" Foreground="{StaticResource SciFiTextDim}"/>
                             <TextBlock Text="W:45°" FontSize="7" Foreground="#B3FF9900" HorizontalAlignment="Center"/>

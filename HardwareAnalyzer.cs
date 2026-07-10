@@ -9,48 +9,53 @@ namespace FileCounterPro_Windows
         {
             try
             {
-                // Check common installation paths
-                string[] commonPaths = {
-                    @"C:\Program Files (x86)\Steam\steamapps\common\Hogwarts Legacy",
-                    @"D:\SteamLibrary\steamapps\common\Hogwarts Legacy",
-                    @"E:\SteamLibrary\steamapps\common\Hogwarts Legacy",
-                    @"C:\Program Files\Epic Games\HogwartsLegacy",
-                    @"D:\Epic Games\HogwartsLegacy",
-                    @"E:\Epic Games\HogwartsLegacy",
-                    @"F:\SteamLibrary\steamapps\common\Hogwarts Legacy",
-                    @"F:\Epic Games\HogwartsLegacy",
-                    @"G:\SteamLibrary\steamapps\common\Hogwarts Legacy",
-                    @"G:\Epic Games\HogwartsLegacy"
+                // Common root paths to check on ALL available drives
+                string[] libraryRoots = {
+                    @"SteamLibrary\steamapps\common\Hogwarts Legacy",
+                    @"Steam\steamapps\common\Hogwarts Legacy",
+                    @"Program Files (x86)\Steam\steamapps\common\Hogwarts Legacy",
+                    @"Program Files\Steam\steamapps\common\Hogwarts Legacy",
+                    @"Epic Games\HogwartsLegacy",
+                    @"Program Files\Epic Games\HogwartsLegacy",
+                    @"Program Files (x86)\Epic Games\HogwartsLegacy",
+                    @"Games\Hogwarts Legacy",
+                    @"Hogwarts Legacy"
                 };
 
-                // Check all logical drives for Steam/Epic libraries
+                // 1. Iterate through all system drives (C:\, D:\, E:\, etc)
                 foreach (DriveInfo drive in DriveInfo.GetDrives())
                 {
                     if (drive.IsReady)
                     {
-                        string[] dynamicPaths = {
-                            Path.Combine(drive.Name, @"SteamLibrary\steamapps\common\Hogwarts Legacy"),
-                            Path.Combine(drive.Name, @"Steam\steamapps\common\Hogwarts Legacy"),
-                            Path.Combine(drive.Name, @"Epic Games\HogwartsLegacy"),
-                            Path.Combine(drive.Name, @"Program Files\Epic Games\HogwartsLegacy"),
-                            Path.Combine(drive.Name, @"Program Files (x86)\Steam\steamapps\common\Hogwarts Legacy")
-                        };
-
-                        foreach(var path in dynamicPaths) {
-                            if (Directory.Exists(path)) {
-                                return path;
+                        foreach(var libRoot in libraryRoots) 
+                        {
+                            string fullPath = Path.Combine(drive.Name, libRoot);
+                            if (Directory.Exists(fullPath)) 
+                            {
+                                return fullPath;
                             }
                         }
                     }
                 }
 
-                foreach (var path in commonPaths)
+                // 2. Check explicitly common hardcoded paths just in case DriveInfo fails
+                string[] hardcodedFallbackPaths = {
+                    @"C:\Program Files (x86)\Steam\steamapps\common\Hogwarts Legacy",
+                    @"C:\Program Files\Epic Games\HogwartsLegacy",
+                    @"D:\SteamLibrary\steamapps\common\Hogwarts Legacy",
+                    @"D:\Epic Games\HogwartsLegacy",
+                    @"E:\SteamLibrary\steamapps\common\Hogwarts Legacy",
+                    @"E:\Epic Games\HogwartsLegacy"
+                };
+
+                foreach (var path in hardcodedFallbackPaths)
                 {
                     if (Directory.Exists(path))
                     {
                         return path;
                     }
                 }
+
                 return null;
             }
             catch

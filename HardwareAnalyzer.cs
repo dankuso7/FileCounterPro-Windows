@@ -1,63 +1,62 @@
 using System;
-using System.Text;
-using System.Management;
+using System.IO;
 
 namespace FileCounterPro_Windows
 {
     public static class HardwareAnalyzer
     {
-        public static string GetSystemInfo()
+        public static string FindHogwartsLegacy()
         {
-            StringBuilder sb = new StringBuilder();
-
             try
             {
-                sb.AppendLine("=== CPU INFO ===");
-                using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("select * from Win32_Processor"))
-                {
-                    foreach (ManagementObject obj in searcher.Get())
-                    {
-                        sb.AppendLine($"Name: {obj["Name"]}");
-                        sb.AppendLine($"Cores: {obj["NumberOfCores"]}");
-                        sb.AppendLine($"Logical Processors: {obj["NumberOfLogicalProcessors"]}");
-                    }
-                }
+                // Check common installation paths
+                string[] commonPaths = {
+                    @"C:\Program Files (x86)\Steam\steamapps\common\Hogwarts Legacy",
+                    @"D:\SteamLibrary\steamapps\common\Hogwarts Legacy",
+                    @"E:\SteamLibrary\steamapps\common\Hogwarts Legacy",
+                    @"C:\Program Files\Epic Games\HogwartsLegacy",
+                    @"D:\Epic Games\HogwartsLegacy",
+                    @"E:\Epic Games\HogwartsLegacy",
+                    @"F:\SteamLibrary\steamapps\common\Hogwarts Legacy",
+                    @"F:\Epic Games\HogwartsLegacy",
+                    @"G:\SteamLibrary\steamapps\common\Hogwarts Legacy",
+                    @"G:\Epic Games\HogwartsLegacy"
+                };
 
-                sb.AppendLine("\n=== GPU INFO ===");
-                using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("select * from Win32_VideoController"))
+                // Check all logical drives for Steam/Epic libraries
+                foreach (DriveInfo drive in DriveInfo.GetDrives())
                 {
-                    foreach (ManagementObject obj in searcher.Get())
+                    if (drive.IsReady)
                     {
-                        sb.AppendLine($"Name: {obj["Name"]}");
-                        sb.AppendLine($"Driver Version: {obj["DriverVersion"]}");
-                        
-                        var adapterRam = obj["AdapterRAM"];
-                        if (adapterRam != null)
-                        {
-                            long bytes = Convert.ToInt64(adapterRam);
-                            sb.AppendLine($"VRAM: {bytes / 1024 / 1024} MB");
+                        string[] dynamicPaths = {
+                            Path.Combine(drive.Name, @"SteamLibrary\steamapps\common\Hogwarts Legacy"),
+                            Path.Combine(drive.Name, @"Steam\steamapps\common\Hogwarts Legacy"),
+                            Path.Combine(drive.Name, @"Epic Games\HogwartsLegacy"),
+                            Path.Combine(drive.Name, @"Program Files\Epic Games\HogwartsLegacy"),
+                            Path.Combine(drive.Name, @"Program Files (x86)\Steam\steamapps\common\Hogwarts Legacy")
+                        };
+
+                        foreach(var path in dynamicPaths) {
+                            if (Directory.Exists(path)) {
+                                return path;
+                            }
                         }
                     }
                 }
 
-                sb.AppendLine("\n=== RAM INFO ===");
-                using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("select * from Win32_PhysicalMemory"))
+                foreach (var path in commonPaths)
                 {
-                    long totalCapacity = 0;
-                    foreach (ManagementObject obj in searcher.Get())
+                    if (Directory.Exists(path))
                     {
-                        totalCapacity += Convert.ToInt64(obj["Capacity"]);
-                        sb.AppendLine($"Speed: {obj["Speed"]} MHz");
+                        return path;
                     }
-                    sb.AppendLine($"Total RAM: {totalCapacity / 1024 / 1024 / 1024} GB");
                 }
+                return null;
             }
-            catch (Exception ex)
+            catch
             {
-                sb.AppendLine($"Error querying WMI: {ex.Message}");
+                return null;
             }
-
-            return sb.ToString();
         }
     }
 }

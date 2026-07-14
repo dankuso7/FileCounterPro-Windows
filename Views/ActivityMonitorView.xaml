@@ -27,7 +27,7 @@
         </StackPanel>
 
         <!-- Stats Row -->
-        <UniformGrid Grid.Row="1" Columns="4" Margin="0,0,0,20">
+        <UniformGrid Grid.Row="1" Columns="5" Margin="0,0,0,20">
             <!-- CPU -->
             <Border Margin="0,0,8,0" Background="{StaticResource SciFiBgPanel}" BorderBrush="{StaticResource SciFiNeonCyan}" BorderThickness="1" CornerRadius="12" Padding="16">
                 <StackPanel>
@@ -75,7 +75,7 @@
             </Border>
 
             <!-- Network -->
-            <Border Margin="8,0,0,0" Background="{StaticResource SciFiBgPanel}" BorderBrush="{StaticResource SciFiNeonGreen}" BorderThickness="1" CornerRadius="12" Padding="16">
+            <Border Margin="4,0,4,0" Background="{StaticResource SciFiBgPanel}" BorderBrush="{StaticResource SciFiNeonGreen}" BorderThickness="1" CornerRadius="12" Padding="16">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                         <TextBlock Text="🌐" FontSize="13" Foreground="{StaticResource SciFiNeonGreen}" Margin="0,0,6,0"/>
@@ -89,6 +89,21 @@
                         <TextBlock Text="↓ " FontSize="12" Foreground="{StaticResource SciFiNeonCyan}"/>
                         <TextBlock x:Name="TxtNetDown" Text="0 KB/s" FontSize="16" FontWeight="Black" Foreground="White"/>
                     </StackPanel>
+                </StackPanel>
+            </Border>
+            
+            <!-- Power -->
+            <Border Margin="8,0,0,0" Background="{StaticResource SciFiBgPanel}" BorderBrush="#FFFFD700" BorderThickness="1" CornerRadius="12" Padding="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                        <TextBlock Text="⚡" FontSize="13" Foreground="#FFFFD700" Margin="0,0,6,0"/>
+                        <TextBlock Text="POWER USAGE" FontSize="9" FontWeight="Bold" Foreground="{StaticResource SciFiTextDim}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                        <TextBlock x:Name="TxtPowerWatts" Text="0" FontSize="30" FontWeight="Black" Foreground="White"/>
+                        <TextBlock Text=" W" FontSize="14" FontWeight="Bold" Foreground="#FFFFD700" VerticalAlignment="Bottom" Margin="0,0,0,5"/>
+                    </StackPanel>
+                    <TextBlock x:Name="TxtPowerStatus" Text="Calculating..." FontSize="10" Foreground="{StaticResource SciFiTextDim}" Margin="0,4,0,0"/>
                 </StackPanel>
             </Border>
         </UniformGrid>

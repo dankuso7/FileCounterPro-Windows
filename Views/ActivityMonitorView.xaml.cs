@@ -108,6 +108,17 @@ namespace FileCounterPro_Windows.Views
             }
             catch { }
 
+            // Power Estimation (Load-based)
+            double cpuWatts = (cpu / 100.0) * 85.0; // Assume 85W peak CPU
+            double gpuWatts = (_gpuLoad / 100.0) * 180.0; // Assume 180W peak GPU
+            double baseWatts = 15.0; // Motherboard, RAM, fans
+            double totalPower = cpuWatts + gpuWatts + baseWatts;
+            TxtPowerWatts.Text = ((int)totalPower).ToString();
+            
+            if (totalPower > 200) TxtPowerStatus.Text = "HEAVY LOAD";
+            else if (totalPower > 100) TxtPowerStatus.Text = "MODERATE LOAD";
+            else TxtPowerStatus.Text = "IDLE (EFFICIENT)";
+
             // Processes
             RefreshProcesses(cpu);
         }
